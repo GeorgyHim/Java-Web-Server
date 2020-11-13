@@ -39,7 +39,7 @@ public class PageGenerator {
     public String renderPage(String name, Map<String, Object> data) {
         Writer stringWriter = new StringWriter();
         try {
-            Template template = config.getTemplate(TEMPLATES_DIR + File.separator + name);
+            Template template = config.getTemplate(TEMPLATES_DIR + "/" + name);
             template.process(data, stringWriter);
         }
         catch (IOException | TemplateException e) {
@@ -49,6 +49,6 @@ public class PageGenerator {
     }
 
     private PageGenerator() {
-        config = new Configuration(Configuration.VERSION_2_3_30);
+        config = new Configuration();
     }
 }
