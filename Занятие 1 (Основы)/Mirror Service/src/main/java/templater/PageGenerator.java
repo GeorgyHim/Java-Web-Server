@@ -18,7 +18,6 @@ import java.util.Map;
 public class PageGenerator {
     /** Адрес папки с шаблонами */
     private static final String TEMPLATES_DIR = "templates";
-    private static final String MODULE_DIR = "Mirror Service";
 
     /** Singleton-Генератор HTML-страниц */
     private static PageGenerator pageGenerator;
@@ -40,7 +39,7 @@ public class PageGenerator {
     public String renderPage(String name, Map<String, Object> data) {
         Writer stringWriter = new StringWriter();
         try {
-            Template template = config.getTemplate(MODULE_DIR + File.separator + TEMPLATES_DIR + File.separator + name);
+            Template template = config.getTemplate(name);
             template.process(data, stringWriter);
         }
         catch (IOException | TemplateException e) {
@@ -50,6 +49,7 @@ public class PageGenerator {
     }
 
     private PageGenerator() {
-        config = new Configuration();
+        config = new Configuration(Configuration.VERSION_2_3_30);
+        config.setClassForTemplateLoading(this.getClass(), "/templates/");
     }
 }
