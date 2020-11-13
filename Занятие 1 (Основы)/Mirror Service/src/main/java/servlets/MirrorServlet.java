@@ -18,6 +18,13 @@ public class MirrorServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String value = request.getParameter("key");
         Map<String, Object> data = Collections.singletonMap("key", value);
-        response.getWriter().println(PageGenerator.getInstance().renderPage("mirror.html", data));
+        buildResponse(response, "mirror.html", data, HttpServletResponse.SC_OK);
+    }
+
+    private void buildResponse(HttpServletResponse response, String templateName, Map<String, Object> data,
+                               int statusCode) throws IOException {
+        response.getWriter().println(PageGenerator.getInstance().renderPage(templateName, data));
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(statusCode);
     }
 }
