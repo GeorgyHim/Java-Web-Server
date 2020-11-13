@@ -5,3 +5,5 @@
 *.docx
 **/storage
 **/db_*
+**/*Tester
+**/*.jar
