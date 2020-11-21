@@ -33,6 +33,7 @@ public class AuthServlet extends HttpServlet {
         String sessionId = request.getSession().getId();
         User user = accountService.getAuthorizedUser(sessionId);
         if (user == null) {
+            response.getWriter().println("User not authorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -56,6 +57,7 @@ public class AuthServlet extends HttpServlet {
 
         User user = accountService.getUserByLogin(login);
         if (user == null || !user.getPassword().equals(password)) {
+            response.getWriter().println("Bad login or password");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -63,6 +65,7 @@ public class AuthServlet extends HttpServlet {
         try {
             accountService.loginUser(request.getSession().getId(), user);
         } catch (UserAlreadyAuthorized userAlreadyAuthorized) {
+            response.getWriter().println("User already authorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
