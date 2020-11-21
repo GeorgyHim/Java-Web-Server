@@ -60,7 +60,7 @@ public class AccountService {
      * @throws UserAlreadyAuthorized    - Исключение когда указанная сессия уже связана с другим пользователем
      */
     public void loginUser(String sessionId, User user) throws UserAlreadyAuthorized {
-        if (authorizedUsers.containsKey(sessionId))
+        if (authorizedUsers.containsKey(sessionId) && !authorizedUsers.get(sessionId).equals(user))
             throw new UserAlreadyAuthorized();
 
         authorizedUsers.put(sessionId, user);
