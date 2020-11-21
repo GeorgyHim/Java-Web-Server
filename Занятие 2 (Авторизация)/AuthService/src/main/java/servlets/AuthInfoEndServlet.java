@@ -37,38 +37,6 @@ public class AuthInfoEndServlet extends AccountServlet {
     }
 
     /**
-     * Метод авторизации пользователя
-     */
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        setContentType(response);
-
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        User user = accountService.getUserByLogin(login);
-        if (user == null || !user.getPassword().equals(password)) {
-            response.getWriter().println("Bad login or password");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        try {
-            accountService.loginUser(request.getSession().getId(), user);
-        } catch (UserAlreadyAuthorized userAlreadyAuthorized) {
-            response.getWriter().println("User already authorized");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        returnData(response, gson.toJson(user));
-    }
-
-    /**
      * Метод завершения сессии пользователя
      */
     @Override
