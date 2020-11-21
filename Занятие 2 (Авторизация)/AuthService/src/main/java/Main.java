@@ -1,6 +1,10 @@
 import accounts.AccountService;
 import accounts.User;
 import accounts.UserAlreadyRegistered;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.AuthServlet;
@@ -8,11 +12,28 @@ import servlets.AuthServlet;
 public class Main {
     private static AccountService accountService = new AccountService();
 
-    public static void main(String[] args) {
-        //registerUsersByLogin("admin", "test");
-        ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        handler.addServlet(new ServletHolder(new AuthServlet(accountService)), "api/auth/");
+    public static void main(String[] args) throws Exception {
+        Server server = createServer(8080);
+        server.start();
+        System.out.println("Server started");
+        server.join();
+    }
 
+    private static Server createServer(int port) {
+        //registerUsersByLogin("admin", "test");
+
+        ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        contextHandler.addServlet(new ServletHolder(new AuthServlet(accountService)), "/api/auth/");
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setResourceBase("resources/templates");
+
+        HandlerList handlerList = new HandlerList();
+        handlerList.setHandlers(new Handler[]{resourceHandler, contextHandler});
+
+        Server server = new Server(port);
+        server.setHandler(handlerList);
+        return server;
     }
 
     private static void registerUsersByLogin(String... logins) {
