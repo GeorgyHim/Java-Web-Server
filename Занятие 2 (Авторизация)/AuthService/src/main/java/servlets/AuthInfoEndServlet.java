@@ -2,7 +2,6 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.User;
-import accounts.UserAlreadyAuthorized;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

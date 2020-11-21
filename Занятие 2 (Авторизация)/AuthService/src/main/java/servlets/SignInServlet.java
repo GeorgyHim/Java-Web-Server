@@ -31,7 +31,7 @@ public class SignInServlet extends AccountServlet {
 
         User user = accountService.getUserByLogin(login);
         if (user == null || !user.getPassword().equals(password)) {
-            response.getWriter().println("Bad login or password");
+            response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -44,6 +44,6 @@ public class SignInServlet extends AccountServlet {
             return;
         }
 
-        returnData(response, gson.toJson(user));
+        returnData(response, "Authorized: " + login);
     }
 }
