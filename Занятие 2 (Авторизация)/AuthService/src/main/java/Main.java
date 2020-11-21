@@ -26,7 +26,7 @@ public class Main {
         contextHandler.addServlet(new ServletHolder(new AuthServlet(accountService)), "/api/auth/");
 
         ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setResourceBase("resources/templates");
+        resourceHandler.setResourceBase("src/main/resources/templates");
 
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{resourceHandler, contextHandler});
