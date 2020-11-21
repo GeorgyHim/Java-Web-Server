@@ -37,7 +37,7 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        returnUserJson(response, user);
+        returnData(response, gson.toJson(user));
     }
 
     /**
@@ -67,23 +67,33 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        returnUserJson(response, user);
+        returnData(response, gson.toJson(user));
     }
 
     /**
-     * Метод выхода пользо
+     * Метод завершения сессии пользователя
      */
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doDelete(request, response);
+        setContentType(response);
+
+        String sessionId = request.getSession().getId();
+        User user = accountService.getAuthorizedUser(sessionId);
+
+        if (user == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        accountService.logoutUser(sessionId);
+        returnData(response, "Goodbye!");
     }
 
     /**
      * Запись объекта user в response в формате json
      */
-    private void returnUserJson(HttpServletResponse response, User user) throws IOException {
-        String json = gson.toJson(user);
-        response.getWriter().println(json);
+    private void returnData(HttpServletResponse response, String data) throws IOException {
+        response.getWriter().println(data);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
