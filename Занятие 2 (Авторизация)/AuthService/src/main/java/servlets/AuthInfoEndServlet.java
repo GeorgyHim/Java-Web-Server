@@ -54,12 +54,4 @@ public class AuthInfoEndServlet extends AccountServlet {
         accountService.logoutUser(sessionId);
         returnData(response, "Goodbye!");
     }
-
-    /**
-     * Запись объекта user в response в формате json
-     */
-    private void returnData(HttpServletResponse response, String data) throws IOException {
-        response.getWriter().println(data);
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
 }
