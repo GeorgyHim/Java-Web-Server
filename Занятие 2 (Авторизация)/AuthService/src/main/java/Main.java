@@ -9,6 +9,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.AuthInfoEndServlet;
 import servlets.SignInServlet;
+import servlets.SignUpServlet;
 
 public class Main {
     private static AccountService accountService = new AccountService();
@@ -26,6 +27,7 @@ public class Main {
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         contextHandler.addServlet(new ServletHolder(new AuthInfoEndServlet(accountService)), "/api/auth/");
         contextHandler.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        contextHandler.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("src/main/resources/templates");
