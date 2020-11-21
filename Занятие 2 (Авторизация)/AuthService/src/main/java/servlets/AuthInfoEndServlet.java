@@ -94,11 +94,4 @@ public class AuthInfoEndServlet extends AccountServlet {
         response.getWriter().println(data);
         response.setStatus(HttpServletResponse.SC_OK);
     }
-
-    /**
-     * Метод установления нужного типа контента для response
-     */
-    private void setContentType(HttpServletResponse response) {
-        response.setContentType("text/html;charset=utf-8");
-    }
 }
