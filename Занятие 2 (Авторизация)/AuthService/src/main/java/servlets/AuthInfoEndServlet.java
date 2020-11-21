@@ -6,21 +6,17 @@ import accounts.UserAlreadyAuthorized;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthInfoEndServlet extends HttpServlet {
-
-    /** Ссылка на {@link accounts.AccountService} */
-    private final AccountService accountService;
+public class AuthInfoEndServlet extends AccountServlet {
 
     /** Сериализатор в Json */
     private static Gson gson = new Gson();
 
     public AuthInfoEndServlet(AccountService accountService) {
-        this.accountService = accountService;
+        super(accountService);
     }
 
     /**
@@ -37,7 +33,6 @@ public class AuthInfoEndServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
-
         returnData(response, gson.toJson(user));
     }
 
