@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthServlet extends HttpServlet {
+public class AuthInfoEndServlet extends HttpServlet {
 
     /** Ссылка на {@link accounts.AccountService} */
     private final AccountService accountService;
@@ -19,7 +19,7 @@ public class AuthServlet extends HttpServlet {
     /** Сериализатор в Json */
     private static Gson gson = new Gson();
 
-    public AuthServlet(AccountService accountService) {
+    public AuthInfoEndServlet(AccountService accountService) {
         this.accountService = accountService;
     }
 
