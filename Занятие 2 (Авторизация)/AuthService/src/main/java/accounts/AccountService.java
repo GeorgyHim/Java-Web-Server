@@ -66,6 +66,10 @@ public class AccountService {
         authorizedUsers.put(sessionId, user);
     }
 
+    /**
+     *
+     * @param sessionId - Метод завершения сессии
+     */
     public void logoutUser(String sessionId) {
         authorizedUsers.remove(sessionId);
     }

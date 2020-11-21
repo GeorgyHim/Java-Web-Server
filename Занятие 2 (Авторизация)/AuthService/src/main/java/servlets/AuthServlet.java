@@ -1,6 +1,8 @@
 package servlets;
 
 import accounts.AccountService;
+import accounts.User;
+import accounts.UserAlreadyAuthorized;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -23,40 +25,72 @@ public class AuthServlet extends HttpServlet {
 
     /**
      * Метод получения авторизованного пользователя
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doGet(request, response);
+        setContentType(response);
+
+        String sessionId = request.getSession().getId();
+        User user = accountService.getAuthorizedUser(sessionId);
+        if (user == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        returnUserJson(response, user);
     }
 
     /**
-     *
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * Метод авторизации пользователя
      */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doPost(request, response);
+        setContentType(response);
+
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        User user = accountService.getUserByLogin(login);
+        if (user == null || !user.getPassword().equals(password)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        try {
+            accountService.loginUser(request.getSession().getId(), user);
+        } catch (UserAlreadyAuthorized userAlreadyAuthorized) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        returnUserJson(response, user);
     }
 
     /**
-     *
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * Метод выхода пользо
      */
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doDelete(request, response);
+    }
+
+    /**
+     * Запись объекта user в response в формате json
+     */
+    private void returnUserJson(HttpServletResponse response, User user) throws IOException {
+        String json = gson.toJson(user);
+        response.getWriter().println(json);
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    /**
+     * Метод установления нужного типа контента для response
+     */
+    private void setContentType(HttpServletResponse response) {
+        response.setContentType("text/html;charset=utf-8");
     }
 }
