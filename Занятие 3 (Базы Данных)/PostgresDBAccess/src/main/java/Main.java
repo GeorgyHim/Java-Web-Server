@@ -23,11 +23,27 @@ public class Main {
     }
 
     static void connectWithDataSource() {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        dataSource.setServerNames(new String[]{"localhost"});
+        dataSource.setPortNumbers(new int[]{5432});
+        dataSource.setDatabaseName("test_db");
+        dataSource.setUser("postgres");
+        dataSource.setPassword("supergeorgyuser555");
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query) ) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("last_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         connectWithDriverManager();
-
+        connectWithDataSource();
     }
 }
