@@ -1,5 +1,6 @@
 package service;
 
+import interlayer.dao.UserDAO;
 import model.User;
 import util.exception.UserAlreadyAuthorized;
 import util.exception.UserAlreadyRegistered;
@@ -12,14 +13,13 @@ import java.util.Map;
  */
 public class AccountService {
 
-    /** Перечень зарегистрированных пользователей со связью login-{@link User} */
-    private final Map<String, User> registeredUsers;
+    private final UserDAO userDAO;
 
     /** Перечень авторизованных пользователей со связью sessionId-{@link User} */
     private final Map<String, User> authorizedUsers;
 
     public AccountService() {
-        this.registeredUsers = new HashMap<>();
+        userDAO = new UserDAO();
         this.authorizedUsers = new HashMap<>();
     }
 
@@ -30,10 +30,10 @@ public class AccountService {
      * @throws UserAlreadyRegistered    - Исключение в ситуации когда указанный логин уже занят
      */
     public void registerNewUser(User newUser) throws UserAlreadyRegistered {
-        if (registeredUsers.containsKey(newUser.getLogin()))
+        if (userDAO.getByLogin(newUser.getLogin()) != null)
             throw new UserAlreadyRegistered();
 
-        registeredUsers.put(newUser.getLogin(), newUser);
+        userDAO.addUser(newUser);
     }
 
     /**
@@ -43,7 +43,7 @@ public class AccountService {
      * @return      - Найденный пользователь либо Null
      */
     public User getUserByLogin(String login) {
-        return registeredUsers.get(login);
+        return userDAO.getByLogin(login);
     }
 
     /**
