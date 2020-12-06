@@ -1,15 +1,15 @@
-package interlayer.hibernateUtil;
+package interlayer.hibernate;
 
 import model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateInteraction {
+public class HibernateSessionFactory {
     /** Фабрика сессий Hibernate */
     private static SessionFactory sessionFactory;
 
-    private HibernateInteraction() {
+    private HibernateSessionFactory() {
     }
 
     public static SessionFactory getSessionFactory() {
