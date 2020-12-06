@@ -32,6 +32,7 @@ public class SignUpServlet extends AccountServlet {
         User user = new User(login, password);
         try {
             accountService.registerNewUser(user);
+            response.getWriter().println(String.format("User %s registered", login));
         } catch (UserAlreadyRegistered userAlreadyRegistered) {
             response.getWriter().println("User already exist");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
