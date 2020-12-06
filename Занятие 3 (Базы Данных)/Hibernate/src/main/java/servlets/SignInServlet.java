@@ -1,8 +1,8 @@
 package servlets;
 
-import accounts.AccountService;
-import accounts.User;
-import accounts.UserAlreadyAuthorized;
+import service.AccountService;
+import model.User;
+import util.exception.UserAlreadyAuthorized;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

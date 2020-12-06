@@ -1,8 +1,8 @@
 package servlets;
 
-import accounts.AccountService;
-import accounts.User;
-import accounts.UserAlreadyRegistered;
+import service.AccountService;
+import model.User;
+import util.exception.UserAlreadyRegistered;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

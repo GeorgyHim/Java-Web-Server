@@ -1,4 +1,4 @@
-package accounts;
+package util.exception;
 
 public class UserAlreadyAuthorized extends Exception {
 }

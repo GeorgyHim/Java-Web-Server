@@ -1,7 +1,7 @@
 package servlets;
 
-import accounts.AccountService;
-import accounts.User;
+import service.AccountService;
+import model.User;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

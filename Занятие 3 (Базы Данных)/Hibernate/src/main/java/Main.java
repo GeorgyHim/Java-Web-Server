@@ -1,6 +1,6 @@
-import accounts.AccountService;
-import accounts.User;
-import accounts.UserAlreadyRegistered;
+import service.AccountService;
+import model.User;
+import util.exception.UserAlreadyRegistered;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;

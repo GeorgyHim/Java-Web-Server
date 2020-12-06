@@ -1,6 +1,6 @@
 package servlets;
 
-import accounts.AccountService;
+import service.AccountService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public abstract class AccountServlet extends HttpServlet {
 
-    /** Ссылка на {@link accounts.AccountService} */
+    /** Ссылка на {@link service.AccountService} */
     protected final AccountService accountService;
 
     public AccountServlet(AccountService accountService) {

@@ -1,4 +1,8 @@
-package accounts;
+package service;
+
+import model.User;
+import util.exception.UserAlreadyAuthorized;
+import util.exception.UserAlreadyRegistered;
 
 import java.util.HashMap;
 import java.util.Map;
