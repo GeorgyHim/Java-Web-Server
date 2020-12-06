@@ -1,4 +1,4 @@
-package interlayer.hibernate;
+package interlayer.hibernateUtil;
 
 import model.User;
 import org.hibernate.SessionFactory;
