@@ -1,14 +1,14 @@
-package hibernate;
+package interlayer.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateSessionFactory {
+public class HibernateInteraction {
     /** Фабрика сессий Hibernate */
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactory() {
+    private HibernateInteraction() {
     }
 
     public static SessionFactory getSessionFactory() {
