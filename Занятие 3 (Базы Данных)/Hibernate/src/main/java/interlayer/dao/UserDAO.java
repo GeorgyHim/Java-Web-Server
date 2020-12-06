@@ -5,6 +5,7 @@ import model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -33,7 +34,10 @@ public class UserDAO {
 
     public long addUser(User user) {
         try(Session session = sessionFactory.openSession()) {
-            return (long) session.save(user);
+            Transaction transaction = session.beginTransaction();
+            long id = (long) session.save(user);
+            transaction.commit();
+            return id;
         }
     }
 }
