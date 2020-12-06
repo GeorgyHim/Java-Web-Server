@@ -33,7 +33,8 @@ public class SignUpServlet extends AccountServlet {
         try {
             accountService.registerNewUser(user);
         } catch (UserAlreadyRegistered userAlreadyRegistered) {
-            userAlreadyRegistered.printStackTrace();
+            response.getWriter().println("User already exist");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }
