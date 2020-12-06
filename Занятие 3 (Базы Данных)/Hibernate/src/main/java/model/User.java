@@ -1,17 +1,32 @@
 package model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Пользователь
  */
-public class User {
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+    private static final long serialVersionUID = -8706689714326132798L;
+
+    /** Идентификатор пользователя */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     /** Логин пользователя*/
-    private final String login;
+    @Column(name = "login", unique = true, updatable = false)
+    private String login;
 
     /** Пароль */
+    @Column(name = "password")
     private String password;
+
+    public User() {
+    }
 
     public User(String login, String password) {
         this.login = login;
