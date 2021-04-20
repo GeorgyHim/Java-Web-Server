@@ -12,13 +12,15 @@ import java.io.IOException;
 public class ChatWebSocket {
     private Session session;
 
+    public ChatWebSocket() {}
+
     @OnWebSocketConnect
-    private void onOpen(Session session) {
+    public void onOpen(Session session) {
         this.session = session;
     }
 
     @OnWebSocketMessage
-    private void onMessage(String message) {
+    public void onMessage(String message) {
         echo(message);
     }
 
